@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import Input from "./Component/Input";
+import React, {useState} from "react";
+import Output from "./Component/Output";
 
 function App() {
+  const [list, setlist] = useState([]);
+  let addlist = (inputtext) => {
+    if(inputtext !== '')
+      setlist([...list, inputtext]);
+  };
+
+  const ondelete=(key)=>{
+    let newlist = [...list]
+    newlist.splice(key , 1)
+    setlist([...newlist])
+   } 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Input addlist={addlist} />
+      <hr/>
+      {
+        list.map((listitem, i)=>{
+          return <Output key ={i} item={listitem}  delete={ondelete} index={i}/>
+        })
+      }
+    </>
   );
 }
 
